@@ -32,7 +32,7 @@
         </section>
 
 
-        <form action="/harvest/123456" method="POST">
+        <form action="/harvest/{{plant._id}}" method="POST">
             <fieldset>
                 <legend>Harvested:</legend>
                 
@@ -43,23 +43,20 @@
 
                 <label>
                     Date harvested
-                    <input type="date" name="date_planted">
+                    <input type="date" name="date_harvested">
                 </label>
 
                 <input type="submit" class="submit" value="Harvest!">
             </fieldset>
         </form>
 
-        {#
-            TODO: Create a for loop here to loop over all harvests (passed in 
-            from the route's context) and display their information.
-        #}
         <section id="harvest-history">
             <h3>Harvest History</h3>
 
             <ul>
-                <li>5/15/2020: Harvested 3 tomatoes</li>
-                <li>5/18/2020: Harvested 2 tomatoes</li>
+                {%for harvest in harvests%}
+                <li>{{harvest.date_harvested}}: Harvested {{harvest.quantity}} - {{plant.name}}</li>
+                {%endfor%}
             </ul>
         </section>
 
