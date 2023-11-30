@@ -8,15 +8,6 @@
 
         <a href="/create" class="nav">+ New Plant</a>
 
-        {#
-            TODO: All of the following cards are what we'd refer to as
-            "hard-coded". That is, their values do not actually come from the 
-            database! Refactor this page to use a 'for' loop to display all
-            plants with the data passed from the route function's context.
-
-            HINT: Use the plant's _id field as the id for constructing URLs.
-        #}
-
         {%for plant in plants%}
         <div class="card">
             <a href="/plant/{{plant._id}}"><img src="{{plant.image}}"></a>
@@ -26,6 +17,7 @@
         </div>
         {%endfor%}
 
+        
         <div id="items">
             <div class="card">
                 <a href="/plant/1"><img src="https://www.almanac.com/sites/default/files/styles/primary_image_in_article/public/image_nodes/tomatoes_helios4eos_gettyimages-edit.jpeg?itok=4KrW14a4"></a>

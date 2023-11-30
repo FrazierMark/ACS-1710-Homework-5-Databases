@@ -38,15 +38,10 @@ def about():
 def create():
     """Display the plant creation page & process data from the creation form."""
     if request.method == 'POST':
-        # TODO: Get the new plant's name, variety, photo, & date planted, and 
-        # store them in the object below.
         name = request.form.get('plant_name')
         variety = request.form.get('variety')
         photo_url = request.form.get('photo')
         date_planted = request.form.get('date_planted')
-        
-        print(name)
-        print(variety)
         
         new_plant = {
             'name': name,
@@ -55,12 +50,9 @@ def create():
             'date_planted': date_planted
         }
         
-        # TODO: Make an `insert_one` database call to insert the object into the
-        # database's `plants` collection, and get its inserted id. Pass the 
-        # inserted id into the redirect call below.
+    
         created_plant = mongo.db.plants.insert_one(new_plant)
-        print(created_plant.inserted_id)
-        plant_id = created_plant
+        plant_id = created_plant.inserted_id
 
         return redirect(url_for('detail', plant_id=plant_id))
 
@@ -70,10 +62,8 @@ def create():
 @app.route('/plant/<plant_id>')
 def detail(plant_id):
     """Display the plant detail page & process data from the harvest form."""
+    plant_to_show = mongo.db.plants.find_one({'_id': ObjectId(plant_id)})
 
-    # TODO: Replace the following line with a database call to retrieve *one*
-    # plant from the database, whose id matches the id passed in via the URL.
-    plant_to_show = ''
 
     # TODO: Use the `find` database operation to find all harvests for the
     # plant's id.
@@ -128,14 +118,24 @@ def edit(plant_id):
 
 @app.route('/delete/<plant_id>', methods=['POST'])
 def delete(plant_id):
+    
     # TODO: Make a `delete_one` database call to delete the plant with the given
     # id.
-
+    plant_to_delete = mongo.db.plants.delete_one({'_id': ObjectId(plant_id)})
+    
     # TODO: Also, make a `delete_many` database call to delete all harvests with
     # the given plant id.
+    
+    #plants_to_delete = mongo.db.harvests.delete_many({'_id': ObjectId(plant_id)})
 
     return redirect(url_for('plants_list'))
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)
 
+# if __name__ == '__main__':
+#     app.config['ENV'] = 'development'
+#     app.run(debug=True)
+
+if __name__ == '__main__':
+    app.run(host='127.0.0.1', port=8080, debug=True)
