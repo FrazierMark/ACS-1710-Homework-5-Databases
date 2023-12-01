@@ -40,7 +40,7 @@ def create():
     if request.method == 'POST':
         name = request.form.get('plant_name')
         variety = request.form.get('variety')
-        photo_url = request.form.get('photo')
+        photo_url = request.form.get('photo_url')
         date_planted = request.form.get('date_planted')
         
         new_plant = {
@@ -99,7 +99,7 @@ def edit(plant_id):
         plant_to_update = mongo.db.plants.update_one({'_id': ObjectId(plant_id)}, {'$set': {
             'name': request.form.get('plant_name'),
             'variety': request.form.get('variety'),
-            'photo_url': request.form.get('photo'),
+            'photo_url': request.form.get('photo_url'),
             'date_planted': request.form.get('date_planted')
         }})
         return redirect(url_for('detail', plant_id=plant_id))
